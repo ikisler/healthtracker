@@ -1,0 +1,119 @@
+body {
+	max-width: 1100px;
+	background-color: #69af62;
+	width: 80%;
+	margin: auto;
+	font-family: 'ABeeZee', sans-serif;
+}
+
+header,
+main {
+	background-color: #ecffdf;
+	padding: 40px;
+	margin: 30px;
+	box-shadow: 5px 5px 10px #24741B;
+}
+
+/*** Header ***/
+header {
+	text-align: center;
+}
+
+h1 {
+	width: 80%;
+	margin: 0 auto;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #aaa;
+}
+
+input {
+	width: 80%;
+	padding: 10px;
+	font-size: 1.2em;
+}
+
+input:focus {
+	outline: none;
+	border: 2px solid #69af62;
+}
+
+ul {
+	width: 80%;
+	margin: 0 auto;
+	padding-left: 0px;
+	text-align: left;
+	list-style-type: none;
+	color: #777;
+}
+
+li {
+	padding: 2px 0;
+}
+
+/*** Food Table ***/
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+thead {
+	font-size: 1.5em;
+	border-bottom: 2px solid #aaa;;
+}
+
+tbody {
+	padding-left: 10px;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #ccdfbf;
+}
+
+td {
+	padding: 5px;
+}
+
+tbody td {
+	padding-left: 15px;
+}
+
+tfoot {
+	font-size: 1.2em;
+}
+
+.table-left {
+	width: 80%;
+}
+
+.table-right {
+	text-align: right;
+}
+
+.delete {
+	color: #777;
+	padding-left: 0;
+	cursor: pointer;
+}
+
+/*** Buttons ***/
+#search-button {
+	width: 80px;
+	height: 45px;
+	margin: 3px;
+	background-color: #ecffdf;
+	font-size: 1.2em;
+	border: 3px double #69af62;
+}
+
+#reset-button {
+	width: 80px;
+	background-color: #ecffdf;
+	font-size: 0.9em;
+	border: 3px double #69af62;
+}
+
+#reset-button:focus,
+#search-button:focus {
+	outline: none;
+	border: 3px solid #69af62;
+}
