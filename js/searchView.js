@@ -76,7 +76,6 @@ app.SearchView = Backbone.View.extend({
 	addOneResult: function( food ) {
 		var view = new app.ResultsView({ model: food });
 		$('.search-results').append( view.render().el );
-		console.log(app.Results.name());
 	},
 
 	// Add all items in the **Todos** collection at once.
@@ -84,6 +83,50 @@ app.SearchView = Backbone.View.extend({
 		this.$('.search-results').html('');
 		app.Results.each(this.addOne, this);
 	},
+
+	accessNutritionix: function(foodQuery) {
+		/*
+    	$.getJSON('https://api.nutritionix.com/v1_1/search/' + foodQuery + '?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat&appId=cef4e263&appKey=e473f453db5ce19ee663ea7ef5cf953d', function(data) {
+        
+        //articles = data.response[2];
+        articles = data.response.hits[0].item_name;
+        var articleSnippet;
+        console.log(articles);
+
+        //if(articleSnippet === 'null') {}
+
+        //for(var i=0; i<articles.length; i++) {
+            //article = articles[i];
+
+            // If article has no snippet, direct user to click the link
+            //articleSnippet = article.snippet;
+            //articleSnippet = (!articleSnippet) ? 'Click link for story.': articleSnippet;
+
+            //$nytElem.append('<li class="article"><a href="' + article.web_url+'">' + article.headline.main + '</a>' + '<p>' + articleSnippet + '</p>' + '</li>');
+
+        //}
+	    }).error(function() {
+	        //$nytHeaderElem.text('New York Times articles could not be loaded.');
+	        console.log('Could not access database.')
+	        });
+	    */
+
+	    var query = 'https://api.nutritionix.com/v1_1/search/' + foodQuery + '?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat&appId=cef4e263&appKey=e473f453db5ce19ee663ea7ef5cf953d';
+
+	    $.ajax({url: query,
+	        dataType:'json',
+	        success: function(data) {
+	            var results = data.hits;
+	            
+	            console.log(results);
+	            //console.log(articleList.hits[0].fields.item_name);
+	            for(var i=0; i<results.length; i++) {
+		    		app.Results.create({brandname: results[i].fields.brand_name, name: results[i].fields.item_name, calories: results[i].fields.nf_calories});
+		    		console.log('Name: ' + results[i].fields.brand_name + ' ' + results[i].fields.item_name + ' calories: ' + results[i].fields.nf_calories);
+    			}
+	        }
+	    });
+    },
 
     searchForMatch: function() {
     	for(var i=0; i<this.exampleFoods.length; i++) {
@@ -94,6 +137,13 @@ app.SearchView = Backbone.View.extend({
     		}
     	}
 
+    	//this.accessNutritionix('cheese');
+    	this.accessNutritionix(this.$input.val().trim());
+    	/*
+    	console.log(results);
+
+
+
     	var currentItem;
     	for(var i=0; i<this.exampleFoods.length; i++) {
     		// Add search results to .search-results ul
@@ -102,9 +152,26 @@ app.SearchView = Backbone.View.extend({
     		//$('.search-results').append('<li>' + this.exampleFoods[i].name +'</li>')
     		app.Results.create({name: this.exampleFoods[i].name, calories: this.exampleFoods[i].calories});
     	}
+    	*/
     }
 
 });
+
+/*
+var books = Backbone.Collection.extend({
+	url: 'https://api.nutritionix.com/v1_1/search/cheddar%20cheese?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat&appId=cef4e263&appKey=e473f453db5ce19ee663ea7ef5cf953d'
+});
+
+var testThing = new books();
+console.log(testThing.create());
+
+/*
+API key: e473f453db5ce19ee663ea7ef5cf953d
+APP ID: cef4e263
+
+'https://api.nutritionix.com/v1_1/search/' + cheddar%20cheese + '?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat&appId=cef4e263&appKey=e473f453db5ce19ee663ea7ef5cf953d'
+
+*/
 
 /*
 	newAttributes: function() {

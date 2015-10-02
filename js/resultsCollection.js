@@ -9,6 +9,7 @@ var app = app || {};
 // server.
 app.Result = Backbone.Model.extend({
 	defaults: {
+		brandname: '',
 		name: '',
 		calories: 0
 	},

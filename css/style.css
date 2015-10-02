@@ -117,3 +117,13 @@ tfoot {
 	outline: none;
 	border: 3px solid #69af62;
 }
+
+/*** Footer ***/
+footer {
+	margin: 30px;
+	text-align: right;
+}
+
+a {
+	color: #000;
+}
