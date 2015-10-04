@@ -29,16 +29,33 @@ app.FooterView = Backbone.View.extend({
 		//this.listenTo(app.Foods, 'reset', this.addAll);
 
 		//app.Foods.fetch();
+		this.$totalCalories = $('.calorie-total');
+
+		this.listenTo(app.Foods, 'all', this.total);
 	},
 
 	resetList: function() {
-		console.log(app.Foods.name());
-		//app.Foods.reset();
-		_.invoke(app.Foods.name(), 'destroy');
+		
+		app.Foods.reset();
+
+		localStorage.clear();
+
+		//console.log(app.Foods.models);
+
+		//_.invoke(app.Foods.models, 'destroy');
 		//app.Foods.invoke('destroy');
      	return false;
 //		app.Foods.reset();
 //		return false;
+	},
+
+	total: function() {
+		var FoodsLength = app.Foods.length;
+		var totalCalories = 0;
+		for(var i=0; i<FoodsLength; i++) {
+			totalCalories = totalCalories + app.Foods.models[i].attributes.calories;
+		}
+		this.$totalCalories.text(totalCalories.toFixed(2));
 	}
 
 });

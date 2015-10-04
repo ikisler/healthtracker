@@ -23,6 +23,7 @@ app.FoodView = Backbone.View.extend({
 	initialize: function() {
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'destroy', this.remove);
+		this.listenTo(app.Foods, 'reset', this.remove);
 	},
 
 	// Re-renders the titles of the todo item.
@@ -33,7 +34,6 @@ app.FoodView = Backbone.View.extend({
 	},
 
 	deleteFoodItem: function() {
-		console.log("delete food item");
 		this.model.destroy();
 	}
 });

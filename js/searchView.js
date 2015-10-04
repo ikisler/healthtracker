@@ -8,7 +8,7 @@ app.SearchView = Backbone.View.extend({
 
 	// Instead of generating a new element, bind to the existing skeleton of
 	// the App already present in the HTML.
-	el: 'header',
+	el: 'form',
 
 	// Our template for the line of statistics at the bottom of the app.
 	//foodItemTemplate: _.template( $('#food-item-template').html() ),
@@ -24,6 +24,7 @@ app.SearchView = Backbone.View.extend({
 		//this.allCheckbox = this.$('#toggle-all')[0];
 		this.$input = this.$('#search');
 		this.$searchResults = this.$('.search-results');
+		this.$totalCalories = $('.calorie-total');
 		//this.$footer = this.$('#footer');
 		//this.$main = this.$('#main');
 
@@ -41,7 +42,16 @@ app.SearchView = Backbone.View.extend({
 	addOne: function( food ) {
 		var view = new app.FoodView({ model: food });
 		$('#food-list').append( view.render().el );
-		console.log(app.Foods.name());
+
+/*
+		console.log(this.$totalCalories.text());		
+		var FoodsLength = app.Foods.length;
+		var totalCalories = 0;
+		for(var i=0; i<FoodsLength; i++) {
+			totalCalories = totalCalories + app.Foods.models[i].attributes.calories;
+		}
+		this.$totalCalories.text(totalCalories.toFixed(2));
+*/
 	},
 
 	// Add all items in the **Todos** collection at once.
@@ -85,31 +95,7 @@ app.SearchView = Backbone.View.extend({
 	},
 
 	accessNutritionix: function(foodQuery) {
-		/*
-    	$.getJSON('https://api.nutritionix.com/v1_1/search/' + foodQuery + '?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat&appId=cef4e263&appKey=e473f453db5ce19ee663ea7ef5cf953d', function(data) {
-        
-        //articles = data.response[2];
-        articles = data.response.hits[0].item_name;
-        var articleSnippet;
-        console.log(articles);
-
-        //if(articleSnippet === 'null') {}
-
-        //for(var i=0; i<articles.length; i++) {
-            //article = articles[i];
-
-            // If article has no snippet, direct user to click the link
-            //articleSnippet = article.snippet;
-            //articleSnippet = (!articleSnippet) ? 'Click link for story.': articleSnippet;
-
-            //$nytElem.append('<li class="article"><a href="' + article.web_url+'">' + article.headline.main + '</a>' + '<p>' + articleSnippet + '</p>' + '</li>');
-
-        //}
-	    }).error(function() {
-	        //$nytHeaderElem.text('New York Times articles could not be loaded.');
-	        console.log('Could not access database.')
-	        });
-	    */
+	    app.Results.reset();
 
 	    var query = 'https://api.nutritionix.com/v1_1/search/' + foodQuery + '?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat&appId=cef4e263&appKey=e473f453db5ce19ee663ea7ef5cf953d';
 
@@ -118,26 +104,27 @@ app.SearchView = Backbone.View.extend({
 	        success: function(data) {
 	            var results = data.hits;
 	            
-	            console.log(results);
-	            //console.log(articleList.hits[0].fields.item_name);
 	            for(var i=0; i<results.length; i++) {
 		    		app.Results.create({brandname: results[i].fields.brand_name, name: results[i].fields.item_name, calories: results[i].fields.nf_calories});
-		    		console.log('Name: ' + results[i].fields.brand_name + ' ' + results[i].fields.item_name + ' calories: ' + results[i].fields.nf_calories);
     			}
 	        }
 	    });
+
+	    this.$input.val('');
     },
 
     searchForMatch: function() {
+    	// Prevent the form from trying to submit to a different page
+    	event.preventDefault();
+    	/*
     	for(var i=0; i<this.exampleFoods.length; i++) {
     		if(this.$input.val().trim() === this.exampleFoods[i].name) {
     			app.Foods.create({name: this.exampleFoods[i].name, calories: this.exampleFoods[i].calories});
 
     			this.$input.val('');
     		}
-    	}
+    	}*/
 
-    	//this.accessNutritionix('cheese');
     	this.accessNutritionix(this.$input.val().trim());
     	/*
     	console.log(results);

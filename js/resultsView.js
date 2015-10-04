@@ -14,13 +14,15 @@ app.ResultsView = Backbone.View.extend({
 
 	// The DOM events specific to an item.
 	events: {
-		'click': 'deleteFoodItem'
+		'click': 'deleteResultItem'
 	},
 
 	// The TodoView listens for changes to its model, re-rendering. Since there's
 	// a one-to-one correspondence between a **Todo** and a **TodoView** in this
 	// app, we set a direct reference on the model for convenience.
 	initialize: function() {
+		this.$input = this.$('#search');
+
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model, 'destroy', this.addOne);
@@ -29,17 +31,21 @@ app.ResultsView = Backbone.View.extend({
 	// Re-renders the titles of the todo item.
 	render: function() {
 		this.$el.html( this.template( this.model.attributes ) );
-		//this.$input = this.$('.edit');
+
 		return this;
 	},
 
-	deleteFoodItem: function() {
+	deleteResultItem: function() {
 		this.model.destroy();
 	},
 
 	addOne: function(food) {
-		var view = new app.FoodView({ model: food });
-		$('#food-list').append( view.render().el );
+		//var view = new app.FoodView({ model: food });
+		//$('#food-list').append( view.render().el );
+
+		app.Foods.create({name: food.attributes.name, calories: food.attributes.calories});
+
+		this.$input.val('');
 
 		//_.invoke(app.Results.name(), 'destroy');
 		app.Results.reset();

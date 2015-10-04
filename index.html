@@ -12,9 +12,11 @@
 <!--		<h1>- Calorie Tracker -</h1> -->
 		<h1>⪻ Calorie Tracker ⪼</h1>
 		<p>Search for a food, then add it to your total to track your calorie intake.</p>
+		<form>
 		<input id="search" placeholder="Search for a food" autofocus><button id="search-button">Search</button>
 		<ul class="search-results">
 		</ul>
+		</form>
 	</header>
 
 	<main>
@@ -26,30 +28,15 @@
 				</tr>
 			</thead>
 			<tbody id="food-list">
-				<tr>
-					<td class="table-left">Example food</td>
-					<td class="table-right">0000</td>
-					<td class="table-right delete">X</td>
-				</tr>
-				<tr>
-					<td class="table-left">Example food</td>
-					<td class="table-right">0000</td>
-					<td class="table-right delete">X</td>
-				</tr>
-				<tr>
-					<td class="table-left">Example food</td>
-					<td class="table-right">0000</td>
-					<td class="table-right delete">X</td>
-				</tr>
 			</tbody>
 			<tfoot id="table-footer">
 				<tr>
 					<td class="table-left">Total</td>
-					<td class="calorie-total table-right">0000</td>
+					<td class="calorie-total table-right"></td>
 				</tr>
 				<tr>
 					<td class="table-left"></td>
-					<td colspan=2 class="calorie-total table-right"><button id="reset-button">Reset</button></td>
+					<td colspan=2 class="table-right"><button id="reset-button">Reset</button></td>
 				</tr>
 			</tfoot>
 		</table>
