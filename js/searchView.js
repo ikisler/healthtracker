@@ -21,6 +21,7 @@ app.SearchView = Backbone.View.extend({
 	// At initialization we bind to the relevant events on the `Todos`
 	// collection, when items are added or changed.
 	initialize: function() {
+		that = this;
 		//this.allCheckbox = this.$('#toggle-all')[0];
 		this.$input = this.$('#search');
 		this.$searchResults = this.$('.search-results');
@@ -97,17 +98,29 @@ app.SearchView = Backbone.View.extend({
 	accessNutritionix: function(foodQuery) {
 	    app.Results.reset();
 
+	    this.$searchResults.text('Loading...');
+
 	    var query = 'https://api.nutritionix.com/v1_1/search/' + foodQuery + '?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat&appId=cef4e263&appKey=e473f453db5ce19ee663ea7ef5cf953d';
 
 	    $.ajax({url: query,
 	        dataType:'json',
 	        success: function(data) {
+	        	that.$searchResults.text('');
+
 	            var results = data.hits;
+	            var resultsLength = results.length;
+
+	            if(resultsLength === 0) {
+	            	that.$searchResults.text('No results');
+	            	return false;
+	            }
 	            
-	            for(var i=0; i<results.length; i++) {
+	            for(var i=0; i<resultsLength; i++) {
 		    		app.Results.create({brandname: results[i].fields.brand_name, name: results[i].fields.item_name, calories: results[i].fields.nf_calories});
     			}
 	        }
+	    }).error(function(){
+	    	that.$searchResults.text('Connection failed.');
 	    });
 
 	    this.$input.val('');
