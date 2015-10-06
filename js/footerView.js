@@ -1,54 +1,33 @@
 var app = app || {};
 
-// The Application
+// FooterView
 // ---------------
 
-// Our overall **AppView** is the top-level piece of UI.
+// The view that controls the reset button and the calories total
 app.FooterView = Backbone.View.extend({
 
-	// Instead of generating a new element, bind to the existing skeleton of
-	// the App already present in the HTML.
 	el: '#table-footer',
 
-	// Our template for the line of statistics at the bottom of the app.
-	//foodItemTemplate: _.template( $('#food-item-template').html() ),
-
+	// When the reset button is clicked, it triggers the resetList function
 	events: {
 		'click #reset-button': 'resetList'
 	},
 
-	// At initialization we bind to the relevant events on the `Todos`
-	// collection, when items are added or changed.
+	// Set up references, listen to all changes in Foods
 	initialize: function() {
-		//this.allCheckbox = this.$('#toggle-all')[0];
-		//this.$input = this.$('#search');
-		//this.$footer = this.$('#footer');
-		//this.$main = this.$('#main');
-
-		//this.listenTo(app.Foods, 'add', this.addOne);
-		//this.listenTo(app.Foods, 'reset', this.addAll);
-
-		//app.Foods.fetch();
 		this.$totalCalories = $('.calorie-total');
 
 		this.listenTo(app.Foods, 'all', this.total);
 	},
 
+	// Reset the Foods collection and clear the localStorage
 	resetList: function() {
-		
+	
 		app.Foods.reset();
-
 		localStorage.clear();
-
-		//console.log(app.Foods.models);
-
-		//_.invoke(app.Foods.models, 'destroy');
-		//app.Foods.invoke('destroy');
-     	return false;
-//		app.Foods.reset();
-//		return false;
 	},
 
+	// Add up the calories from each item in the Foods collection, then display it in the correct box
 	total: function() {
 		var FoodsLength = app.Foods.length;
 		var totalCalories = 0;

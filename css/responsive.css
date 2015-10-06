@@ -2,6 +2,16 @@
 	body {
 		width: 100%;
 	}
+
+	h1 {
+		font-size: 2em;
+	}
+}
+
+@media (max-width: 550px) {
+	.header-decoration {
+		display: none;
+	}
 }
 
 @media (max-width: 500px) {
@@ -9,7 +19,6 @@
 		width: 100%;
 	}
 
-	header,
 	main {
 		margin: 30px 0;
 	}

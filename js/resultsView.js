@@ -1,25 +1,21 @@
 var app = app || {};
 
-// Food Item View
+// Results Item View
 // --------------
 
-// The DOM element for a result item...
+// The DOM element for a result item
 app.ResultsView = Backbone.View.extend({
-
-	//... is a list tag.
 	tagName: 'li',
 
-	// Cache the template function for a single item.
+	// Get the template for a single item
 	template: _.template( $('#result-item-template').html() ),
 
-	// The DOM events specific to an item.
+	// When it's clicked, run the deleteResultItem function
 	events: {
 		'click': 'deleteResultItem'
 	},
 
-	// The TodoView listens for changes to its model, re-rendering. Since there's
-	// a one-to-one correspondence between a **Todo** and a **TodoView** in this
-	// app, we set a direct reference on the model for convenience.
+	// Listen for changes in the model to trigger rerendering or removal
 	initialize: function() {
 		this.$input = this.$('#search');
 
@@ -28,27 +24,25 @@ app.ResultsView = Backbone.View.extend({
 		this.listenTo(this.model, 'destroy', this.addOne);
 	},
 
-	// Re-renders the titles of the todo item.
+	// Re-renders the titles of the Results item.
 	render: function() {
 		this.$el.html( this.template( this.model.attributes ) );
 
 		return this;
 	},
 
+	// Delete the result item
 	deleteResultItem: function() {
 		this.model.destroy();
 	},
 
+	// Add the result item to the food list by creating a new Food item.
 	addOne: function(food) {
-		//var view = new app.FoodView({ model: food });
-		//$('#food-list').append( view.render().el );
-
 		app.Foods.create({name: food.attributes.name, calories: food.attributes.calories});
 
 		this.$input.val('');
 
-		//_.invoke(app.Results.name(), 'destroy');
+		// Reset the results collection
 		app.Results.reset();
-		//console.log(app.Foods.name());
 	}
 });

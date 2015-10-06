@@ -1,12 +1,9 @@
-// Results collection
-
 var app = app || {};
 
-// Todo Collection
+// Results Model and Collection
 // ---------------
 
-// The collection of todos is backed by *localStorage* instead of a remote
-// server.
+// The Result model
 app.Result = Backbone.Model.extend({
 	defaults: {
 		brandname: '',
@@ -16,12 +13,13 @@ app.Result = Backbone.Model.extend({
 
 });
 
+// The collection of search results is backed by localStorage
 var ResultsList = Backbone.Collection.extend({
 
-	// Reference to this collection's model.
+	// Reference to this collection's model
 	model: app.Result,
 
-	// Save all of the todo items under the `"todos-backbone"` namespace.
+	// Save all of the results items in the healthtracker-results-backbone namespace
 	localStorage: new Backbone.LocalStorage('healthtracker-results-backbone'),
 
 	nextOrder: function() {
@@ -31,18 +29,11 @@ var ResultsList = Backbone.Collection.extend({
 		return this.last().get('order') + 1;
 	},
 
-	// Todos are sorted by their original insertion order.
-	comparator: function( todo ) {
-		return todo.get('order');
-	} /*,
-
-	name: function () {
-		//return this.where({name: });
-		return this.where({name: '*'});	// Figure out how to return everything?
-		//return this;
+	// Results are sorted by their original insertion order.
+	comparator: function( result ) {
+		return result.get('order');
 	}
-*/
 });
 
-// Create our global collection of **Todos**.
+// Create the global collection of Results.
 app.Results = new ResultsList();
