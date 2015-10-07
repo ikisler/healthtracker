@@ -42,8 +42,8 @@ app.SearchView = Backbone.View.extend({
 	},
 
 	// Add a Result item to the list
-	addOneResult: function( food ) {
-		var view = new app.ResultsView({ model: food });
+	addOneResult: function( foodResult ) {
+		var view = new app.ResultsView({ model: foodResult });
 		$('.search-results').append( view.render().el );
 	},
 
@@ -65,6 +65,11 @@ app.SearchView = Backbone.View.extend({
 		// Reset the Results collection
 		app.Results.reset();
 
+		if(!foodQuery) {
+			this.$searchResults.text('Please enter a food.');
+			return false;
+		}
+
 		// Put up a loading message
 		this.$searchResults.text('Loading...');
 
@@ -84,7 +89,9 @@ app.SearchView = Backbone.View.extend({
 				
 				// Loop through the results and create a Results item for each
 				for(var i=0; i<resultsLength; i++) {
-					app.Results.create({brandname: results[i].fields.brand_name, name: results[i].fields.item_name, calories: results[i].fields.nf_calories});
+					app.Results.create({brandname: results[i].fields.brand_name,
+						name: results[i].fields.item_name,
+						calories: results[i].fields.nf_calories});
 				}
 			}
 		}).error(function(){

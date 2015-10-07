@@ -101,21 +101,28 @@ tfoot {
 }
 
 /*** Buttons ***/
-#search-button {
+button {
 	width: 80px;
+	background-color: #ecffdf;
+	border: 3px double #69af62;
+
+}
+
+button:focus {
+	outline: none;
+	border: 3px solid #69af62;
+}
+
+#search-button {
 	height: 45px;
 	margin: 3px;
-	background-color: #ecffdf;
 	font-size: 1.2em;
-	border: 3px double #69af62;
 }
 
 #reset-button {
-	width: 80px;
-	background-color: #ecffdf;
 	font-size: 0.9em;
-	border: 3px double #69af62;
 }
+/*
 
 #reset-button:focus,
 #search-button:focus {

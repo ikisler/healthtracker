@@ -32,7 +32,7 @@ app.FooterView = Backbone.View.extend({
 		var FoodsLength = app.Foods.length;
 		var totalCalories = 0;
 		for(var i=0; i<FoodsLength; i++) {
-			totalCalories = totalCalories + app.Foods.models[i].attributes.calories;
+			totalCalories += app.Foods.models[i].attributes.calories;
 		}
 		this.$totalCalories.text(totalCalories.toFixed(2));
 	}
